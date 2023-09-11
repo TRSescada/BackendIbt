@@ -5,23 +5,17 @@ var Unite7300 = new Schema({
   userID:{
     type:String
   },  
-  phAux:{
+  ph:{
     type:Number
   },
-  cAux:{
+  c:{
     type:Number
   },
-  phAlimentaire:{
+  poste:{
     type:Number
   },
-  cAlimentaire:{
-    type:Number
-  },
-  phCondensat:{
-    type:Number
-  },
-  cCondensat:{
-    type:Number
+  echantillon:{
+    type:String
   },
   submissionTime: Date,
   postIndex: Number                  

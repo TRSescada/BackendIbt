@@ -169,59 +169,26 @@ router.get('/all-values-7200', async (req, res) => {
 router.post('/submit-values-7300', verifyToken, async (req, res) => {
   try {
     const {
-      phAux,
-      cAux,
-      phAlimentaire,
-      cAlimentaire,
-      phCondensat,
-      cCondensat
+      ph,
+      c,
+      poste,
+      echantillon
     } = req.body;
-    const userId = req.userId;
-
-    const validationErrors = [];
-
-    if (!isValidphAuxValue(phAux)) {
-      validationErrors.push('phAux');
-    }
-
-    if (!isValidphAlimentaireValue(phAlimentaire)) {
-      validationErrors.push('phAlimentaire');
-    }
-
-    if (!isValidphCondensatValue(phCondensat)) {
-      validationErrors.push('phCondensat');
-    }
-
-    if (!isValidcValue(cAux)) {
-      validationErrors.push('cAux');
-    }
-
-    if (!isValidcValue(cAlimentaire)) {
-      validationErrors.push('cAlimentaire');
-    }
-
-    if (!isValidcValue(cCondensat)) {
-      validationErrors.push('cCondensat');
-    }
-
     const currentHour = new Date().getHours();
     const postIndex = calculatePostIndex(currentHour);
 
     const unite7300 = new Unite7300({
-      userID: userId,
-      phAux,
-      cAux,
-      phAlimentaire,
-      cAlimentaire,
-      phCondensat,
-      cCondensat,
+      ph,
+      c,
+      poste,
+      echantillon,
       submissionTime: new Date(),
       postIndex
     });
 
     await unite7300.save();
 
-    res.status(201).json({ message: 'Values submitted successfully.Invalid values for: ' + validationErrors.join(', ') });
+    res.status(201).json({ message: 'Values submitted successfully'});
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'An error occurred.' });
